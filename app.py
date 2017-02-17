@@ -26,6 +26,9 @@ with open('/usr/share/dict/words') as f:
     words = [bytes(w.strip(), locale.getpreferredencoding(False))
              for w in f.readlines()]
 
+# subset words to produce more duplicates
+words = [random.choice(words) for i in range(rate ** 2)]
+
 while count:
     producer.send(topic, random.choice(words))
     count -= 1
