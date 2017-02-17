@@ -23,11 +23,9 @@ print('servers={}, topic={}, rate={}, count={}'.format(servers, topic, rate, cou
 producer = KafkaProducer(bootstrap_servers=servers)
 
 with open('/usr/share/dict/words') as f:
-    words = [bytes(w.strip(), locale.getpreferredencoding(False))
-             for w in f.readlines()]
-
-# subset words to produce more duplicates
-words = [random.choice(words) for i in range(rate ** 2)]
+    words = f.readlines()
+    # subset words to produce more duplicates
+    words = [bytes(random.choice(words).strip(), locale.getpreferredencoding(False)) for i in range(rate ** 2)]
 
 while count:
     producer.send(topic, random.choice(words))
