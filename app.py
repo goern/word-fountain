@@ -7,13 +7,13 @@ import time
 from kafka import KafkaProducer
 
 parser = argparse.ArgumentParser(description='Kafka word fountain')
-parser.add_argument('--server', help='A bootstrap server', default='localhost:9092')
-parser.add_argument('--topic', help='Topic to publish to', default='tmp')
+parser.add_argument('--servers', help='The bootstrap servers', default='localhost:9092')
+parser.add_argument('--topic', help='Topic to publish to', default='word-fountain')
 parser.add_argument('--rate', type=int, help='Words per second', default=10)
 parser.add_argument('--count', type=int, help='Total words to publish', default=101)
 args = parser.parse_args()
 
-servers = [os.getenv('SERVER', args.server)]
+servers = os.getenv('SERVERS', args.servers).split(',')
 topic = os.getenv('TOPIC', args.topic)
 rate = int(os.getenv('RATE', args.rate))
 count = int(os.getenv('COUNT', args.count))
