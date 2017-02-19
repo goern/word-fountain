@@ -9,8 +9,8 @@ from kafka import KafkaProducer
 parser = argparse.ArgumentParser(description='Kafka word fountain')
 parser.add_argument('--servers', help='The bootstrap servers', default='localhost:9092')
 parser.add_argument('--topic', help='Topic to publish to', default='word-fountain')
-parser.add_argument('--rate', type=int, help='Words per second', default=10)
-parser.add_argument('--count', type=int, help='Total words to publish', default=101)
+parser.add_argument('--rate', type=int, help='Words per second', default=3)
+parser.add_argument('--count', type=int, help='Total words to publish', default=-1)
 args = parser.parse_args()
 
 servers = os.getenv('SERVERS', args.servers).split(',')
