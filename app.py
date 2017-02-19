@@ -1,5 +1,5 @@
 import argparse
-import locale
+import gzip
 import os
 import random
 import time
@@ -22,10 +22,10 @@ print('servers={}, topic={}, rate={}, count={}'.format(servers, topic, rate, cou
 
 producer = KafkaProducer(bootstrap_servers=servers)
 
-with open('/usr/share/dict/words') as f:
+with gzip.open('words.gz', 'r') as f:
     words = f.readlines()
     # subset words to produce more duplicates
-    words = [bytes(random.choice(words).strip(), locale.getpreferredencoding(False)) for i in range(rate ** 2)]
+    words = [random.choice(words).strip() for i in range(rate ** 2)]
 
 while count:
     producer.send(topic, random.choice(words))
