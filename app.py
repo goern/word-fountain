@@ -32,5 +32,5 @@ while count:
     count -= 1
 #    if not count % (rate * 5):
 #        print(producer.metrics())
-    time.sleep(1 / rate)
+    time.sleep(1.0 / rate)
 
