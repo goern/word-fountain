@@ -25,7 +25,7 @@ producer = KafkaProducer(bootstrap_servers=servers)
 with gzip.open('words.gz', 'r') as f:
     words = f.readlines()
     # subset words to produce more duplicates
-    words = [random.choice(words).strip() for i in range(rate ** 2)]
+    words = [random.choice(words).strip() for i in range(max(42, rate ** 2))]
 
 while count:
     producer.send(topic, random.choice(words))
