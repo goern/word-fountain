@@ -1,1 +1,2 @@
 kafka
+prometheus_client

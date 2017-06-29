@@ -6,6 +6,11 @@ import time
 
 from kafka import KafkaProducer
 
+from prometheus_client import start_http_server, Counter
+
+
+words_send = Counter('words_send', 'Total number of words send by this instance of the word-fountain')
+
 parser = argparse.ArgumentParser(description='Kafka word fountain')
 parser.add_argument('--servers', help='The bootstrap servers', default='localhost:9092')
 parser.add_argument('--topic', help='Topic to publish to', default='word-fountain')
@@ -20,6 +25,8 @@ count = int(os.getenv('COUNT', args.count))
 
 print('servers={}, topic={}, rate={}, count={}'.format(servers, topic, rate, count))
 
+start_http_server(8080)
+
 producer = KafkaProducer(bootstrap_servers=servers)
 
 with gzip.open('words.gz', 'r') as f:
@@ -29,6 +36,8 @@ with gzip.open('words.gz', 'r') as f:
 
 while count:
     producer.send(topic, random.choice(words))
+    words_send.inc()
+
     count -= 1
 #    if not count % (rate * 5):
 #        print(producer.metrics())
