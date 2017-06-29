@@ -9,7 +9,7 @@ from kafka import KafkaProducer
 from prometheus_client import start_http_server, Counter
 
 
-words_send = Counter('words_send', 'Total number of words send by this instance of the word-fountain')
+words_send = Counter('total_words_send', 'Total number of words send by this instance of the word-fountain')
 
 parser = argparse.ArgumentParser(description='Kafka word fountain')
 parser.add_argument('--servers', help='The bootstrap servers', default='localhost:9092')
